@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html ng-app="app" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Twitter Sentiment Visualizer</title>
+    <script
+            src="https://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-animate.min.js"></script>
+    <script src="app.js"></script>
+    <script src="controllers/controllers.js"></script>
+    <link rel="stylesheet" href="css/styles.css" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="js/charts.min.js"></script>
+    <script src="js/chardin.min.js"></script>
+    <script src="js/scripts.min.js"></script>
+    <link rel="stylesheet" href="css/chardin.min.css"/>
+    <script src="js/gauge.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+  
+
+      google.charts.load('current', {
+        'packages':['geochart'],
+        // Note: you will need to get a mapsApiKey for your project.
+        // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+        'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+      });
+      google.charts.setOnLoadCallback(drawRegionsMap);
+
+      function drawRegionsMap() {
+        var data = google.visualization.arrayToDataTable([
+          ['Country', 'Popularity'],
+          ['Germany', Math.random() * (150 - 100) + 100],
+          ['United States', 800],
+          ['India', 1000],
+          ['Canada', Math.random() * (600 - 300) + 300],
+          ['France', Math.random() * (500 - 200) + 200],
+          ['RU', Math.random() * (400 - 100) + 100]
+        ]);
+
+        var options = {colors: '#0000ff'};
+
+        var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+    <style>
+    ::placeholder{
+        color: black;
+    }
+  
+    </style>
+    
+</head>
+
+<body ng-controller="main-ctrl" background-color="#ff0000" >
+
+ <nav>
+    <div class="nav-wrapper">
+      <a href="#" style="margin-left:10px" class="brand-logo"><i class="fa fa-twitter"></i>&nbsp;Sentiment Analysis</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        
+        <li><a href="collapsible.html">About Us</a></li>
+      </ul>
+    </div>
+  </nav>
+  
+<main>
+    <div class="twitter-bird twitter-flying"></div>
+    <div class="container center-align valign">
+        <div class="valign center">
+            <div class="col s12 m12 l12">
+                <div class="input-field">
+                    <form ng-submit="getResponse()">
+                        <h1 style="border-radius:10px;padding:50px;">{{title}}</h1>
+                        <p class="flow-text center">Type in any hashtag or keyword and press enter to visualize <a
+                                target="_blank" href="http://www.twitter.com">Twitter</a> data.</p>
+                                <div style="margin-bottom:40px;margin-top:20px">
+                                <i style="color:black" class="material-icons prefix">#</i>
+
+                        <input style="color:black" data-intro="Enter in the any twitter hashtag here" data-position="right" type="text"
+                               id="tag-input" placeholder="Enter in a hashtag here" ng-model="searchInput"/>
+                            </div>
+                            </form>
+<div id="hide_div" style="box-shadow: -2px 6px 24px 2px rgba(0,0,0,0.31);padding: 20px;border-radius: 10px;background-color:#e0e0e0;visibility: hidden">
+                    <canvas data-intro="See the twitter data visualization here" data-position="left"
+                            id="tweet-chart"></canvas></div>
+                            <br><br>
+                            <div id="raddcard" style=" width:400px;height:400px;padding:10px;margin-right: 10px;margin-top: 30px; background-color:#e0e0e0 ;box-shadow:2px 2px 5px #424242;border-radius: 10px;background-color:#424242;visibility:hidden;float: right;" >
+
+                                <canvas style="margin-top:15px;box-shadow: -2px 6px 24px 2px rgba(0,0,0,0.31);width:400px;height:400px;padding:20px;border-radius:10px;background-color: #e0e0e0" data-intro="See the twitter data visualization here" data-position="left"
+                                id="ggchart"></canvas>
+
+                            </div>
+                                
+                                    
+                            
+    
+                       
+                       
+                    <div id="radcard" style="box-shadow: -2px 6px 24px 2px rgba(0,0,0,0.31);margin-top: 25px;border-radius: 10px;background-color: #e0e0e0; visibility:hidden;width:400px;height:400px;visibility:hidden;" >
+
+                            <canvas style="width:400px;height:400px;padding:20px" data-intro="See the twitter data visualization here" data-position="left"
+                            id="radarchart"></canvas>
+                            
+
+                    </div><br><br>
+                    <div style="visibility:hidden;margin-right:80px;float:right" id="sentval">
+                        <h5>Sentiment value is:<h5>
+                            <div id="sent1" style="visibility: none;" ng-If="percent>=50.0"><h5 style="color:#98fb98;visibility: none">{{percent}}</h5></div>
+                                    <div id="sent2" style="visibility: none" ng-If="percent<50.0"><h5 style="color:#F80000;visibility: none">{{percent}}</h5></div><br><br><br>
+                                </div>
+                
+                            
+                  
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h3 id='hide_text2' style="margin-left:280px;visibility: hidden;">Tweet Density</h3>
+        <br>
+        <br>
+        <div id="regions_div" style="width: 900px; height: 500px;visibility: hidden"></div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+
+        <h4 id="hide_text" style="visibility: hidden" class="flow-text">Tweets sorted from negative to positive..</h4>
+       
+        <div class="container" id="favunfav" style="visibility:hidden">
+            <div><h5 style="color:#F80000">Negative Tweets</h5>
+        <div ng-repeat="data in tweets track by $index" ng-if="$index > (tweets.length / 2)" style="border-radius:10px" class="card card-shadow">
+            <div class="card-content black-text">
+                <p>{{data}}</p>
+            </div>
+        </div></div>
+        <br><br>
+        <div><h5 style="color:#4caf50">Positive Tweets</h5>
+        <div ng-repeat="data in tweets track by $index" ng-if="$index < (tweets.length / 2)" style="border-radius:10px" class="card card-shadow">
+            <div class="card-content black-text">
+                <p>{{data}}</p>
+            </div>
+        </div></div><br><br><br>
+        <h5>The political outcomes and agendas for the given candidate or political party is</h5>
+        <div style="visibility: none" ng-If="disp"><h1 style="color:#98fb98;visibility: none">Favourable</h1></div>
+        <div style="visibility: none"  ng-If="!disp"><h1 style="color:#F80000 ;visibility: none">Unfavourable</h1></div>
+    </div>
+
+
+        <a id="tonalbtn" href="tonal.html" class="btn btn-lg" style="margin-bottom:20px;visibility: hidden">Tonal Analysis</a>
+
+        <!-- <h1 style="margin-top:50px">{{newtitle}}</h1> -->
+
+    </div>
+
+   
+</main>
+<footer class="page-footer blue-grey darken-4">
+        <div class="container">
+            <div class="row">
+                <div class="container">
+                    <div data-intro="The author" data-position="left" class="white-text center">
+                        <p>
+                            By:
+                            <a target="_blank" href="#">Bits Please!</a>
+                        </p>
+                        <p>Developed with modernized JavaScript and CSS frameworks, all with attention to detail and
+                            precision</p>
+    
+                    </div>
+                </div>
+            </div>
+            <div class="center col s12 m12 l12">
+                <a href="http://angularjs.org"><img class="margin-sm-right"
+                                                    src="images/AngularJS-Shield-large-282x300.png" alt="angularjs"
+                                                    height="32"/></a>
+                <a href="http://materializecss.com">
+                    <img src="images/apple-touch-icon-152x152.png" alt="materialize" height="32" class="margin-sm-right"/>
+                </a>
+                <a href="https://nodejs.org/en/"><img class="margin-sm-right" src="images/node.js.png" height="32"
+                                                      alt="node.js"/></a>
+                <a href="http://lesscss.org/"><img class="margin-sm-right" src="images/less-logo.png" height="32"
+                                                   alt="less"/></a>
+            </div>
+        </div>
+    </footer>
+</div>
+</div>
+</body>
+</html>

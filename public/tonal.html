@@ -1,0 +1,106 @@
+<html ng-app="app" lang="en">
+    <head>
+        <title>Tone Analysis</title>
+        <script
+            src="https://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-animate.min.js"></script>
+    <script src="app.js"></script>
+    <script src="controllers/controllers.js"></script>
+    <link rel="stylesheet" href="css/styles.css" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- <script src="js/charts.min.js"></script>
+    <script src="js/chardin.min.js"></script> -->
+    <script src="js/scripts.min.js"></script>
+    <link rel="stylesheet" href="css/chardin.min.css"/>
+    <script src="js/gauge.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <script src="js/scripts.min.js"></script>
+    <link rel="stylesheet" href="css/chardin.min.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+<style>
+   ::placeholder{
+        color: black;
+    }
+    .heading{
+        text-align: center;
+       font-family:  'Roboto', sans-serif;
+    }
+    .main{
+         height: 500px;
+        width: 1000px;
+    }
+    body{
+        text-align: center;
+    }
+    .logo{
+        text-align: left;
+        float: left;
+        font-size: 250%;
+        font-family: 'Roboto', sans-serif;
+        margin-left: 10px;
+    }
+</style>    
+</head>
+    <body ng-controller="tone-ctrl">
+            <nav>
+                    
+                    <div class="nav-wrapper">
+                      <a href="#" class="logo">Sentiment Analysis</a>
+                      <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <li><a href="index.html">&nbsp;Home</a></li>
+                        <li><a href="#">&nbsp;Contact us</a></li>
+                        <li><a href="#">&nbsp;About us</a></li>
+                      </ul>
+                    </div>
+                  </nav>
+
+        <h3>{{newtitle}}</h3>
+        <div class="main" style="align-self: center;">
+                <canvas data-intro="See the twitter data visualization here" data-position="left"
+                id="myChart" height="500" width="1000"></canvas>
+        </div> 
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <footer class="page-footer blue-grey darken-4">
+            <div class="container">
+                <div class="row">
+                    <div class="container">
+                        <div data-intro="The author" data-position="left" class="white-text center">
+                            <p>
+                                By:
+                                <a target="_blank" href="#">Bits Please!</a>
+                            </p>
+                            <p>Developed with modernized JavaScript and CSS frameworks, all with attention to detail and
+                                precision</p>
+        
+                        </div>
+                    </div>
+                </div>
+
+                <div class="center col s12 m12 l12">
+                    <a href="http://angularjs.org"><img class="margin-sm-right"
+                                                        src="images/AngularJS-Shield-large-282x300.png" alt="angularjs"
+                                                        height="32"/></a>
+                    <a href="http://materializecss.com">
+                        <img src="images/apple-touch-icon-152x152.png" alt="materialize" height="32" class="margin-sm-right"/>
+                    </a>
+                    <a href="https://nodejs.org/en/"><img class="margin-sm-right" src="images/node.js.png" height="32"
+                                                          alt="node.js"/></a>
+                    <a href="http://lesscss.org/"><img class="margin-sm-right" src="images/less-logo.png" height="32"
+                                                       alt="less"/></a>
+                </div>
+            </div>
+        </footer>
+    </body>
+
+</html>
