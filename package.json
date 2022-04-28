@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/Afischbacher/twitter-sentiment-visualizer#readme",
   "dependencies": {
-    "async": "^2.1.5",
+    "async": "^2.6.4",
     "chartjs": "^0.3.24",
     "dotenv": "^4.0.0",
     "express": "^4.16.4",
