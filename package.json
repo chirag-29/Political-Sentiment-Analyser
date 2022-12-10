@@ -21,7 +21,7 @@
     "async": "^2.1.5",
     "chartjs": "^0.3.24",
     "dotenv": "^4.0.0",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "sentiment": "^3.0.1",
     "twitter": "^1.7.0",
     "watson-developer-cloud": "^3.18.0"
